@@ -1,0 +1,23 @@
+# Based on the makefie to build libblosck in Blosc.jl.
+# ... We compile with:
+#           make -f make.emd clean
+#           make -f make.emd CC=compiler LIB=libfile
+
+CC = gcc
+CFLAGS = -fPIC -O3 -std=gnu99
+CPPFLAGS = -I. -DEMD_SHARED_LIBRARY
+
+LIB = libemd.so
+
+OTHER_OBJ = emd.o
+
+OBJ = $(OTHER_OBJ)
+
+$(LIB): $(OBJ)
+	$(CC) $(CFLAGS) -shared $(OBJ) -o $(LIB)
+
+clean:
+	rm -f $(OBJ) $(LIB)
+
+emd.o: emd.c emd.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ emd.c
