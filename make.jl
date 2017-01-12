@@ -8,6 +8,7 @@ Usage:
   $cmd update emd
   $cmd test
   $cmd test latest
+  $cmd clean
   $cmd -h | --help
   $cmd --version
 
@@ -28,6 +29,13 @@ if arguments["update"] && arguments["emd"]
     end
     print_with_color(:green, "Downloaded latest emd c source files from pyEMD project on github.\n")
     exit(0)
+end
+
+if arguments["clean"]
+  cd("deps") do
+    run(`rm -f installed_vers libemd.dylib libemd.so`)
+  end
+  exit(0)
 end
 
 if arguments["test"]
