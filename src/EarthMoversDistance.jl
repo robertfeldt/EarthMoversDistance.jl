@@ -27,11 +27,6 @@ libemd_emd(n_x, weight_x, n_y, weight_y, cost, flows) =
           (Cint, Ptr{Cdouble}, Cint, Ptr{Cdouble}, Ptr{Cdouble}, Ptr{Cdouble}),
           n_x, weight_x, n_y, weight_y, cost, flows)
 
-libemd_emd2(n_x, weight_x, n_y, weight_y, cost) =
-    ccall((:emd2,libemd), Cdouble,
-          (Cint, Ptr{Cdouble}, Cint, Ptr{Cdouble}, Ptr{Cdouble}),
-          n_x, weight_x, n_y, weight_y, cost)
-
 # API
 function emd!(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Matrix{Float64}, 
     flows::Union{Void, Matrix{Float64}} = nothing)
@@ -48,9 +43,9 @@ function emd!(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Matrix{F
     if flows != nothing
         @assert n_y == size(flows, 2)
         @assert n_x == size(flows, 1)
-        libemd_emd(n_x, pointer(Xweight), n_y, pointer(Yweight), pointer(cost), pointer(flows))
+        libemd_emd(n_x, Xweight, n_y, Yweight, cost, flows)
     else
-        libemd_emd(n_x, pointer(Xweight), n_y, pointer(Yweight), pointer(cost), C_NULL)
+        libemd_emd(n_x, Xweight, n_y, Yweight, cost, C_NULL)
     end
 end
 
