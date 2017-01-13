@@ -9,7 +9,7 @@ CPPFLAGS = -I. -DEMD_SHARED_LIBRARY
 
 LIB = libemd.so
 
-OTHER_OBJ = emd.o
+OTHER_OBJ = emd_translated.o
 
 OBJ = $(OTHER_OBJ)
 
@@ -19,5 +19,5 @@ $(LIB): $(OBJ)
 clean:
 	rm -f $(OBJ) $(LIB)
 
-emd.o: emd.c emd.h
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ emd.c
+emd.o: emd_translated.c emd_translated.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ emd_translated.c
