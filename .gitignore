@@ -1,3 +1,4 @@
 deps/installed_vers
 deps/libemd.dylib
 deps/libemd.so
+deps/*.log
