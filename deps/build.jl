@@ -1,5 +1,4 @@
-using BinDeps
-using Compat
+using Libdl
 
 vers = "2.0" # Use version number in setup.py file of pyEMD: https://raw.githubusercontent.com/garydoranjr/pyemd/master/setup.py
 

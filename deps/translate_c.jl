@@ -13,7 +13,7 @@
 
 function translate_c_file(srcfile, destfile)
     str = open(srcfile, "r") do fh
-        readstring(fh)
+        read(fh, String)
     end
     str = replace(str, "#include <emd.h>",                   "#include <emd_translated.h>")
 
@@ -31,7 +31,7 @@ function translate_c_file(srcfile, destfile)
         print(fh, str)
     end
 
-    print_with_color(:green, "Translated double matrix references in file $(srcfile) and saved in $(destfile)\n")
+    printstyled("Translated double matrix references in file $(srcfile) and saved in $(destfile)\n", color=:green)
 end
 
 translate_c_file(ARGS[1], ARGS[2])

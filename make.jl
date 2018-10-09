@@ -31,7 +31,7 @@ function update_emd()
         run(`wget https://raw.githubusercontent.com/garydoranjr/pyemd/master/c_emd/emd.c`)
         run(`wget https://raw.githubusercontent.com/garydoranjr/pyemd/master/c_emd/emd.h`)
     end
-    print_with_color(:green, "Downloaded latest emd c source files from pyEMD project on github.\n")
+    printstyled("Downloaded latest emd c source files from pyEMD project on github.\n", color=:green)
 end
 
 if arguments["update"] && arguments["emd"]
@@ -81,10 +81,10 @@ end
 
 if arguments["test"]
     if arguments["latest"]
-        print_with_color(:green, "Running latest changed test file.\n")
+        printstyled("Running latest changed test file.\n", color=:green)
         run(`julia --color=yes -L src/$(PackageName).jl $(latest_changed_testfile())`)
     else
-        print_with_color(:green, "Running all tests.\n")
+        printstyled("Running all tests.\n", color=:green)
         run(`julia --color=yes -L src/$(PackageName).jl test/runtests.jl`)
     end
 end

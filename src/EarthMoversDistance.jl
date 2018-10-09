@@ -1,16 +1,11 @@
-__precompile__()
-
 module EarthMoversDistance
 
 export emd
 
-using Compat
-import Compat.String
-
 const libemd = joinpath(dirname(@__FILE__), "..", "deps", "libemd")
 
 function __init__()
-    # If any init or destroy functions need to be called for the lib. 
+    # If any init or destroy functions need to be called for the lib.
     # In this case not, since emd is a "pure" function (no side effects).
     #ccall((:emd_init,libemd), Void, ())
     #atexit() do
@@ -28,8 +23,8 @@ libemd_emd(n_x, weight_x, n_y, weight_y, cost, flows) =
           n_x, weight_x, n_y, weight_y, cost, flows)
 
 # API
-function emd!(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Matrix{Float64}, 
-    flows::Union{Void, Matrix{Float64}} = nothing)
+function emd!(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Matrix{Float64},
+    flows::Union{Nothing, Matrix{Float64}} = nothing)
 
     n_x = length(Xweight)
     n_y = length(Yweight)
@@ -49,18 +44,18 @@ function emd!(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Matrix{F
     end
 end
 
-function emd(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Union{Void, Matrix{Float64}} = nothing)
+function emd(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Union{Nothing, Matrix{Float64}} = nothing)
     if cost == nothing
         cost = ones(Float64, length(Xweight), length(Yweight))
     end
     emd!(Xweight, Yweight, cost)
 end
 
-function emd_flows(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Union{Void, Matrix{Float64}} = nothing)
+function emd_flows(Xweight::Vector{Float64}, Yweight::Vector{Float64}, cost::Union{Nothing, Matrix{Float64}} = nothing)
     if cost == nothing
         cost = ones(Float64, length(Xweight), length(Yweight))
     end
-    flows = zeros(cost)
+    flows = zeros(eltype(cost), axes(cost))
     distance = emd!(Xweight, Yweight, cost, flows)
     return distance, flows
 end
